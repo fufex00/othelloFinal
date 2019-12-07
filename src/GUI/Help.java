@@ -6,7 +6,9 @@
 package GUI;
 
 /**
- *
+ * clase ayuda que se extiende de la interfase del tablero
+ * despliega una ventana que muetra reglas, modos y demás información pertinente
+ * al juego
  * @author Kobem
  */
 public class Help extends javax.swing.JDialog {

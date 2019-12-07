@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import jdk.nashorn.internal.objects.NativeRegExp;
 
 /**
- *
+ * clase registrarse extiende desde el Frame
  * @author Kobem
  */
 public class Login extends javax.swing.JFrame {
@@ -156,10 +156,23 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * método que contiene el botón de salir 
+     * @param evt evento
+     */
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
+    
+    /**
+     * método que almacena el nombre del primer jugador
+     */
     public String name = "";
+    
+    /**
+     * método que contiene el botón de registrar
+     * @param evt evento
+     */
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         Players player = new Players(); //NO BORRAR!
 
@@ -175,14 +188,16 @@ public class Login extends javax.swing.JFrame {
                 for (int i = 0; i < data.playersList.size(); i++) {
                     System.out.println("Y tiene los elementos: " + data.playersList.get(i).getName());
                 }
-
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No hay datos para registrar");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    /**
+     * método que contiene el botón de un jugador
+     * @param evt evento
+     */
     private void btnOnePlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOnePlayerActionPerformed
 
         try {
@@ -207,14 +222,20 @@ public class Login extends javax.swing.JFrame {
                         }
                     }
                 }
-
             }
         } catch (Exception e) {
-
         }
-
     }//GEN-LAST:event_btnOnePlayerActionPerformed
+    
+    /**
+     * método que almacena el nombre del segundo jugador
+     */
     public String name2;
+    
+    /**
+     * método que contiene el botón de dos jugadores
+     * @param evt evento
+     */
     private void btnTwoPlayersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTwoPlayersActionPerformed
         String aux = "";
         try {
@@ -247,6 +268,10 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTwoPlayersActionPerformed
 
+    /**
+     * método que contiene el botón de ayuda en la partida
+     * @param evt evento
+     */
     private void jBAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAyudaActionPerformed
 
         Help fichero = new Help(this, true);
@@ -296,6 +321,10 @@ public class Login extends javax.swing.JFrame {
         });
     }
 
+    
+    /**
+     * variables con los botones que aparecen en la interfase
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnLogin;
@@ -311,5 +340,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lblImagenTablero;
     private javax.swing.JPanel pnlPanelPrincipal;
     // End of variables declaration//GEN-END:variables
-
 }

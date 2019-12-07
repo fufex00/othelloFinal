@@ -5,8 +5,11 @@ import Logic.Players;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import javax.swing.JOptionPane;
 
 public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionListener {
 
@@ -33,13 +36,11 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
             jPanelGameBoard.add(piece);
             pieceList.add(piece);
         }
-
         iniciateNodes();
         iniciateBoard();
         blackPieces();
         whitePieces();
         checkwinner();
-
     }
 
     /**
@@ -189,22 +190,51 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
     }// </editor-fold>//GEN-END:initComponents
 
 
+    /**
+     * método para salir de la partida 
+     * @param evt evento de salida de la partida
+     */
     private void jMenuItemExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExitActionPerformed
         Login window = new Login();
         window.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItemExitActionPerformed
 
+    /**
+     * método para información de la partida
+     * @param evt evento de información sobre la partida
+     */
     private void jMenuItemInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInfoActionPerformed
         Help hlp = new Help(this, true);
         hlp.setVisible(true);
-
     }//GEN-LAST:event_jMenuItemInfoActionPerformed
 
+    /**
+     * método para reiniciar la partida jugada y guardar sus datos en un txt 
+     * @param evt evento de partida nueva
+     */
     private void jMenuItemRestartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRestartActionPerformed
         this.dispose();
         JFOthelloPrincipal neww = new JFOthelloPrincipal();
         neww.setVisible(true);
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter("fichero.txt");
+            pw = new PrintWriter(fichero);
+            pw.println("Jugador: - " + lblPlayerOne.getText() + "- piezas negras: " + lblBlackPieces.getText() + " piezas blancas: " + lblWhitePieces.getText());
+            pw.println("Jugador 2: - " + lblPlayertwo.getText() + "- piezas negras: " + lblBlackPieces.getText() + " piezas blancas: " + lblWhitePieces.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero) {
+                    fichero.close();
+                }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
         iniciateBoard();
     }//GEN-LAST:event_jMenuItemRestartActionPerformed
 
@@ -251,6 +281,9 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         });
     }
 
+    /**
+     * variables de la interfase del juego
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Jugador;
     private javax.swing.JLabel jLabel1;
@@ -276,6 +309,12 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
     ArrayList<Integer> used = new ArrayList<>();
     String colorIcon = "/Images/dark.png";
 
+    /**
+     * método que crea los nodos centrales, si contar los bordes
+     * @param i
+     * @param nextR
+     * @param previousR 
+     */
     private void middleNodeCreation(int i, int nextR, int previousR) {
         pieceList.get(i).setNorth(pieceList.get(previousR));
         pieceList.get(i).setNorthwest(pieceList.get(previousR - 1));
@@ -287,6 +326,9 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         pieceList.get(i).setSoutheast(pieceList.get(nextR + 1));
     }
 
+    /**
+     * método que inicializa el tablero de la partida
+     */
     public final void iniciateBoard() {
         for (PieceNodes piece : pieceList) {
             piece.setEnabled(false);
@@ -310,9 +352,11 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         used.add(35);
         used.add(36);
         checkLegalMoves();
-
     }
 
+    /**
+     * método para inicializar las fichas en el tablero de la partida
+     */
     private void iniciateNodes() {
 
         int nextR = 9;
@@ -331,7 +375,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 pieceList.get(i).setSouth(pieceList.get(nextR));
                 pieceList.get(i).setSoutheast(pieceList.get(nextR + 1));
                 nextR++;
-
             }
             if (i == 7) {
                 pieceList.get(i).setWest(pieceList.get(i - 1));
@@ -395,7 +438,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 pieceList.get(i).setNorth(pieceList.get(previousR));
                 pieceList.get(i).setNortheast(pieceList.get(previousR + 1));
                 previousR++;
-
             }
 
             if (i == 8) {
@@ -414,7 +456,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 pieceList.get(i).setSouth(pieceList.get(nextR));
                 nextR++;
                 previousR++;
-
             }
             if (i == 56) {
                 pieceList.get(i).setNorth(pieceList.get(previousR));
@@ -429,8 +470,8 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
     }
 
     /**
-     *
-     * @param e
+     * método que recopila eventos del Frame
+     * @param e 
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -448,6 +489,9 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         }
     }
 
+    /**
+     * método para verificar movimientos permitidos en la partida
+     */
     private void checkLegalMoves() {
 
         for (int i = 0; i < pieceList.size(); i++) {
@@ -458,6 +502,10 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         //avalible.clear();
     }
 
+    /**
+     * método que verifica la posición al oeste 
+     * @param position posición oeste
+     */
     private void checkWest(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getWest() != null) {
@@ -471,12 +519,14 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                     changeIcon(pieceList.indexOf(aux));
                     avalible.add(pieceList.indexOf(aux));
                 }
-
             }
         }
-
     }
 
+    /**
+     * método que verifica la posición al este
+     * @param position posición este
+     */
     private void checkEast(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getEast() != null) {
@@ -490,12 +540,14 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                     changeIcon(pieceList.indexOf(aux));
                     avalible.add(pieceList.indexOf(aux));
                 }
-
             }
         }
-
     }
 
+    /**
+     * método que verfica la posición al norte
+     * @param position posición norte
+     */
     private void checkNorth(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getNorth() != null) {
@@ -503,18 +555,19 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 while (aux.getNorth() != null && !aux.getNodeColor().equals("n") && !aux.getNorth()
                         .getNodeColor().equals(turn)) {
                     aux = aux.getNorth();
-
                 }
                 if (pieceList.indexOf(aux) != position) {
                     changeIcon(pieceList.indexOf(aux));
                     avalible.add(pieceList.indexOf(aux));
                 }
-
             }
         }
-
     }
 
+    /**
+     * método que verifica la posición al sur
+     * @param position posición sur
+     */
     private void checkSouth(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getSouth() != null) {
@@ -528,12 +581,14 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                     changeIcon(pieceList.indexOf(aux));
                     avalible.add(pieceList.indexOf(aux));
                 }
-
             }
         }
-
     }
 
+    /**
+     * método que verifica la posición al noroeste
+     * @param position posición noroeste
+     */
     private void checkNorthWest(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getNorthwest() != null) {
@@ -548,12 +603,14 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                     changeIcon(pieceList.indexOf(aux));
                     avalible.add(pieceList.indexOf(aux));
                 }
-
             }
         }
-
     }
 
+    /**
+     * método que verifica la posición al noreste
+     * @param position posición noreste
+     */
     private void checkNorthEast(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getNortheast() != null) {
@@ -570,6 +627,10 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         }
     }
 
+    /**
+     * método que verifica la posición al suroeste
+     * @param position posición suroeste
+     */
     private void checkSouthWest(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getSouthwest() != null) {
@@ -583,12 +644,14 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                     changeIcon(pieceList.indexOf(aux));
                     avalible.add(pieceList.indexOf(aux));
                 }
-
             }
         }
-
     }
 
+    /**
+     * método que verifica la posición al sureste
+     * @param position posición sureste
+     */
     private void checkSouthEast(int position) {
         PieceNodes aux = pieceList.get(position);
         if (aux.getSoutheast() != null) {
@@ -608,9 +671,12 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 }
             }
         }
-
     }
 
+    /**
+     * método que verifica movimientos disponibles en la partida
+     * @param position posiciones
+     */
     private void checkAvalibleMovements(int position) {
         checkNorth(position);
         checkSouth(position);
@@ -624,11 +690,20 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         checkSouthWest(position);
     }
 
+    /**
+     * método para cambiar el ícono de la ficha en las partidas
+     * @param position posiciones
+     */
     private void changeIcon(int position) {
         pieceList.get(position).setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/legalMoveIcon.png")));
         pieceList.get(position).setEnabled(true);
     }
 
+    /**
+     * método para verificar si el espacio en el tablero ya fue usado en la partida
+     * @param usedPosition posiciones utilizadas
+     * @return falso
+     */
     private boolean checkUsed(int usedPosition) {
 
         for (Integer position : used) {
@@ -639,6 +714,10 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         return true;
     }
 
+    /**
+     * método para girar las fichas encerradas entre las jugadas ejecutadas
+     * @param position posiciones
+     */
     private void flipPieces(int position) {
         used.add(position);
         for (Integer node : avalible) {
@@ -657,7 +736,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
             colorIcon = "/Images/light.png";
             pieceList.get(position).setIcon(new javax.swing.ImageIcon(getClass().getResource(colorIcon)));
         }
-
         changeColors(position);
         if (turn.equals("b")) {
             turn = "w";
@@ -670,6 +748,10 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         }
     }
 
+    /**
+     * método para cambiar colores en las fichas de la partida actual
+     * @param position posiciones
+     */
     private void changeColors(int position) {
 
         PieceNodes aux = pieceList.get(position);
@@ -704,7 +786,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         nodes.clear();
         counter = 0;
         aux = pieceList.get(position);
-
         aux = aux.getNortheast();
 
         while (aux != null) {
@@ -725,7 +806,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         nodes.clear();
         counter = 0;
         aux = pieceList.get(position);
-
         aux = aux.getSoutheast();
 
         while (aux != null) {
@@ -735,7 +815,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 nodes.add(pieceList.indexOf(aux));
                 aux.setNodeColor(turn);
             }
-
             aux = aux.getSoutheast();
         }
         if (counter > 0) {
@@ -757,7 +836,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 nodes.add(pieceList.indexOf(aux));
                 aux.setNodeColor(turn);
             }
-
             aux = aux.getSouthwest();
         }
         if (counter > 0) {
@@ -780,7 +858,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 nodes.add(pieceList.indexOf(aux));
                 aux.setNodeColor(turn);
             }
-
             aux = aux.getSouth();
         }
         if (counter > 0) {
@@ -793,7 +870,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         counter = 0;
 
         aux = pieceList.get(position);
-
         aux = aux.getEast();
 
         while (aux != null) {
@@ -804,7 +880,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 nodes.add(pieceList.indexOf(aux));
                 aux.setNodeColor(turn);
             }
-
             aux = aux.getEast();
         }
         if (counter > 0) {
@@ -817,7 +892,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         counter = 0;
 
         aux = pieceList.get(position);
-
         aux = aux.getWest();
         while (aux != null) {
 
@@ -827,7 +901,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 nodes.add(pieceList.indexOf(aux));
                 aux.setNodeColor(turn);
             }
-
             aux = aux.getWest();
         }
         if (counter > 0) {
@@ -840,7 +913,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         counter = 0;
 
         aux = pieceList.get(position);
-
         aux = aux.getNorth();
 
         while (aux != null) {
@@ -851,7 +923,6 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
                 nodes.add(pieceList.indexOf(aux));
                 aux.setNodeColor(turn);
             }
-
             aux = aux.getNorth();
         }
         if (counter > 0) {
@@ -865,38 +936,45 @@ public class JFOthelloPrincipal extends javax.swing.JFrame implements ActionList
         counter = 0;
     }
 
+    /**
+     * método que verifica la cantidad de fichas negras existentes en el tablero
+     */
     public final void blackPieces() {
         blackPieces = 0;
 
         for (int i = 0; i < pieceList.size(); i++) {
             if (pieceList.get(i).getNodeColor().equals("b")) {
                 blackPieces = blackPieces + 1;
-
             }
-
         }
         this.lblBlackPieces.setText("" + blackPieces);
         System.out.println("Piezas negras: " + blackPieces);
-
     }
 
+    /**
+     * método que verifica la cantidad de fichas blancas existentes en el tablero
+     */
     public final void whitePieces() {
         whitePieces = 0;
         for (int i = 0; i < pieceList.size(); i++) {
             if (pieceList.get(i).getNodeColor().equals("w")) {
                 whitePieces = whitePieces + 1;
-
             }
         }
         this.lblWhitePieces.setText("" + whitePieces);
         System.out.println("Piezas blancas: " + whitePieces);
     }
 
+    /**
+     * método que verifica si existe un ganador en la partida actual
+     */
     public final void checkwinner() {
-        for (int i = 0; i < avalible.size(); i++) {
-
+        if (used.size() == 63) {
+            if (blackPieces > whitePieces) {
+                JOptionPane.showMessageDialog(null, "¡El Ganador son las negras!");
+            } else {
+                JOptionPane.showMessageDialog(null, "¡El Ganador son las blancas!");
+            }
         }
-
     }
-
 }

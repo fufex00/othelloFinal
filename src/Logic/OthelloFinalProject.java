@@ -14,5 +14,4 @@ public class OthelloFinalProject {
             System.out.println("pieceList.get(" + (i - 1) + ").getButton().setEnabled(false);");
         }
     }
-
 }

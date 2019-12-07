@@ -1,0 +1,28 @@
+Reglas básicas del juego:
+
+-El objetivo principal consiste en tener la mayoria de discos del mismo color al final del juego.
+-Se debe "flanquear" lso discos del oponente, para convertir sus discos en un color propio.
+-Flanquear significa colocar un disco en el tablero para que la fila (o filas) de disco (s) de su oponente esté bordeada en cada
+extremo por un disco de su color. (Una "fila" puede estar compuesta por uno o más discos).
+-Las negras siempre se mueven primero.
+-Si en su turno no se puede "flanquear" su turno se perdera y el oponente debe realizar la siguiente jugada.
+-Los jugadores no pueden saltar sus propios discos de color para flanquear a un disco contrario.
+-Los discos solo se pueden "flanquear" como resultado directo de un movimiento y deben caer en la línea directa del disco colocado hacia abajo.
+-Todos los discos flanqueados en cualquier movimiento deben voltearse, incluso si es una ventaja para el jugador no voltearlos en absoluto. 
+-Una vez que un disco se coloca en una casilla, nunca se puede mover a otra casilla más adelante en el juego. 
+-Cuando ya no es posible que ninguno de los jugadores se mueva, el juego termina. Los discos se cuentan y el jugador que muestra la mayoría de su color es el ganador.
+
+Fuente: https://www.worldothello.org/about/about-othello/othello-rules/official-rules/
+
+Apartado un jugador:
+
+Se necesita que mínimo haya un usuario registrado, de otra forma no podrá acceder. Aquí se juega usuario contra máquina.
+
+Apartado dos jugadores:
+
+Se necesita que mínimo hayan dos usuarios registrados para poder acceder. Aquí se juega usuario contra usuario.
+
+Apartado de registro:
+
+En él podrá registrar los usuarios que entrará a la partida de Othello. Se le solicitará su nombre mediante una ventana interactiva.
+
